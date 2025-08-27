@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Account</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="register-box">
+    <h2>Create Account</h2>
+    <form id="regForm">
+      <div class="form-control">
+        <label for="user">Username</label>
+        <input type="text" id="user" placeholder="Enter username" required>
+      </div>
+      <div class="form-control">
+        <label for="mail">Email</label>
+        <input type="email" id="mail" placeholder="Enter email" required>
+      </div>
+      <div class="form-control">
+        <label for="pass">Password</label>
+        <input type="password" id="pass" placeholder="Enter password" required>
+      </div>
+      <div class="form-control">
+        <label for="cpass">Confirm Password</label>
+        <input type="password" id="cpass" placeholder="Re-enter password" required>
+      </div>
+      <button type="submit">Register</button>
+      <div id="message"></div>
+    </form>
+  </div>
+
+<script>
+  const passwordInput = document.getElementById("pass");
+  const confirmInput = document.getElementById("cpass");
+  const message = document.getElementById("message");
+  const form = document.getElementById("regForm");
+
+  // 🔹 Function to check password rules
+  function validatePassword(showSuccess = false) {
+    let password = passwordInput.value;
+    let confirm = confirmInput.value;
+
+    message.className = "";
+    message.textContent = "";
+
+    if (password.length < 8) {
+      message.className = "error";
+      message.textContent = "Password must be at least 8 characters long.";
+      return false;
+    }
+    if (password.length > 15) {
+      message.className = "error";
+      message.textContent = "Password must not exceed 15 characters.";
+      return false;
+    }
+    if (!/[A-Z]/.test(password)) {
+      message.className = "error";
+      message.textContent = "Password must contain at least one uppercase letter.";
+      return false;
+    }
+    if (!/[a-z]/.test(password)) {
+      message.className = "error";
+      message.textContent = "Password must contain at least one lowercase letter.";
+      return false;
+    }
+    if (!/[0-9]/.test(password)) {
+      message.className = "error";
+      message.textContent = "Password must contain at least one number.";
+      return false;
+    }
+    if (!/[@$!%*?&]/.test(password)) {
+      message.className = "error";
+      message.textContent = "Password must contain at least one special character (@$!%*?&).";
+      return false;
+    }
+    if (confirm !== "" && password !== confirm) {
+      message.className = "error";
+      message.textContent = "Passwords do not match.";
+      return false;
+    }
+
+    if (showSuccess) {
+      message.className = "success";
+      message.textContent = "Registration successful!";
+    }
+    return true;
+  }
+
+  // 🔹 Real-time validation while typing
+  passwordInput.addEventListener("input", () => validatePassword(false));
+  confirmInput.addEventListener("input", () => validatePassword(false));
+
+  // 🔹 Final validation on submit
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (validatePassword(true)) {
+      // Here you can send form data to server
+      console.log("Form submitted successfully!");
+    }
+  });
+</script>
+</body>
+</html>
