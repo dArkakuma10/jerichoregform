@@ -31,13 +31,16 @@
     </form>
   </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
 <script>
   const passwordInput = document.getElementById("pass");
   const confirmInput = document.getElementById("cpass");
   const message = document.getElementById("message");
   const form = document.getElementById("regForm");
 
-  // 🔹 Function to check password rules
+  
   function validatePassword(showSuccess = false) {
     let password = passwordInput.value;
     let confirm = confirmInput.value;
@@ -88,16 +91,25 @@
     return true;
   }
 
-  // 🔹 Real-time validation while typing
+  //Real-time validation while typing
   passwordInput.addEventListener("input", () => validatePassword(false));
   confirmInput.addEventListener("input", () => validatePassword(false));
 
-  // 🔹 Final validation on submit
+  
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (validatePassword(true)) {
+
+      let username = $("#user").val();
+      let Email = $("#mail").val();
+      let Password = $("#pass").val();
+
       // Here you can send form data to server
+      
       console.log("Form submitted successfully!");
+      console.log("Username entered:", username);
+      console.log("Email entered:", Email);
+      console.log("Password entered:", Password);
     }
   });
 </script>
